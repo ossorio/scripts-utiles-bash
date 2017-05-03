@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo -n "GPU is "
+cat /proc/acpi/bbswitch | cut -d " " -f 2
