@@ -1,0 +1,32 @@
+#!/bin/bash
+HOT='\e[91m' # Rojo --> Caliente
+NORMAL='\e[32m' # Verde --> Normal
+COLD='\e[34m' # Azul --> Frio
+ENDCOLOR='\e[m'   # Fin del codigo ANSI
+
+
+sensors | grep Core | tr -s " " | cut -d " " -f3 | cut -d . -f1 > /tmp/temperatures.txt
+
+i=0
+while read temperature; do
+	temperatures[$i]=$temperature
+	let i=i+1
+done < /tmp/temperatures.txt 
+
+numCores=${#temperatures[@]}
+
+printf "Temperatura de la CPU:\n"
+
+for (( i=0; i < $numCores; i++));
+do
+	if [ ${temperatures[$i]} -ge 35 ] && [ ${temperatures[$i]} -le 60 ]
+	then		
+		echo -e "\tCore $i: ${NORMAL}${temperatures[$i]}°C${ENDCOLOR}"
+	elif [ ${temperatures[$i]} -gt 60 ]
+	then		
+		echo -e "\tCore $i: ${HOT}${temperatures[$i]}°C${ENDCOLOR}"
+	elif [ ${temperatures[$i]} -lt 35 ]
+	then		
+		echo -e "\tCore $i: ${COLD}${temperatures[$i]}°C${ENDCOLOR}"
+	fi
+done
