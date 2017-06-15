@@ -31,4 +31,4 @@ La temperatura para cada core se indica con tres colores distintos dependiendo d
 
 *En sistemas operativos basados en **Arch** este comando se encuentra en el paquete **"i2c-tools"**.*
 
-*En sistemas operativos basados en **Ubuntu** se localiza en el paquete "lm-sensors".*
+*En sistemas operativos basados en **Ubuntu** se localiza en el paquete **"lm-sensors"**.*
