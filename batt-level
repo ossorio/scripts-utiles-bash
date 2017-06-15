@@ -1,4 +1,13 @@
 #!/bin/bash
 
-echo -n "Capacidad actual de la batería: " 
-acpi -i | head -n 1 | cut -d " " -f3,4,5,6 | sed "s/,//"
+acpi -i | head -n 1 | cut -d " " -f3,4,5 | tr "," '\n' > /tmp/batt-level.txt
+
+i=0
+while read batt_level; do
+	batt_info[$i]=$batt_level
+	let i=i+1
+done < /tmp/batt-level.txt
+
+echo -e "    State:\t\t${batt_info[0]}"
+echo -e "    Percentage:\t\t${batt_info[1]}"
+echo -e "    Remaining:\t\t${batt_info[2]}"
